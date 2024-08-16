@@ -1,0 +1,32 @@
+body {
+	background-color: #111;
+	--wid: 800px;
+	width: var(--wid);
+	margin: 50px auto;
+}
+textarea {
+	border: 1px solid #444;
+	background-color: #222;
+	resize: none;
+	width: var(--wid);
+	padding: 10px;
+	font-family: monospace;
+	height: 300px;
+	color: #ccc;
+}
+canvas {
+	margin-top: 10px;
+	background-color: #222;
+}
+form {
+	margin: 0px;
+}
+#text {
+	margin-top: 10px;
+	width: calc(var(--wid) - 20px);
+	padding: 10px;
+	background-color: #222;
+	font-family: monospace;
+	min-height: 100px;
+	color: #8bf;
+}
