@@ -10,6 +10,7 @@ export const addLine = (text) => {
 	dom.appendChild(line);
 };
 
-export const addHTML = (html) => {
-	dom.innerHTML += html;
+export const addTitle = (text) => {
+	dom.innerHTML += '<div class="title"></div>';
+	[ ...dom.children ].at(-1).innerText = text;
 };

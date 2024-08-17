@@ -135,7 +135,7 @@ const runFix = () => {
 	const [ apLat, apLon ] = fixData.ap;
 	fixData.sights.forEach((sight, i) => {;
 
-		OUTPUT.addHTML(`<h3>${sight.name}</h3>`);
+		OUTPUT.addTitle(sight.name);
 
 		let lha = sight.gha + apLon;
 		let lhaCalc;
