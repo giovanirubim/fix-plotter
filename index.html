@@ -5,9 +5,21 @@
 	</head>
 	<body>
 		<form spellcheck="false">
-			<textarea id="input"></textarea>
+			<div class="input-panel">
+				<div class="title">Fix Plotter</div>
+				<div class="input-label">Input data</div>
+				<div class="input-text">
+					<textarea id="input"></textarea>
+				</div>
+			</div>
 		</form>
-		<div id="text"></div>
-		<canvas width="800" height="600"></canvas>
+		<div class="main">
+			<div class="output">
+				<div id="text"></div>
+			</div>
+			<div class="canvas">
+				<canvas width="800" height="600"></canvas>
+			</div>
+		</div>
 	</body>
 </html>

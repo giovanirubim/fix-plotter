@@ -5,9 +5,9 @@ const canvas = document.querySelector('canvas');
 const ctx = canvas.getContext('2d');
 
 const colors = {
-	background: '#222',
-	chartLines: '#777',
-	index: [ '#8bf', '#f70', '#0f7' ],
+	background: '#2c2c2c',
+	chartLines: '#666666',
+	index: [ '#55ffaa', '#55aaff', '#ffaa55' ],
 };
 
 let degToPx = NaN;
@@ -73,8 +73,8 @@ const drawAPLongitude = () => {
 export const clear = () => {
 	const { width, height } = canvas;
 
-	margin = Math.min(width, height) * 0.05;
-	degToPx = Math.round(height * 0.3);
+	margin = 10;
+	degToPx = Math.round(height * 0.35);
 	origin = [
 		Math.round(width * 0.5) - 0.5,
 		Math.round(height * 0.5) - 0.5,
