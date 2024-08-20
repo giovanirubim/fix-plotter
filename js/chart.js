@@ -193,7 +193,7 @@ export const drawAzimuth = (zn, label, flipArrow, colorIndex) => {
 	const ay = cy - excess*dirY;
 	const [ bx, by ] = dirMarginIntersection(cx, cy, dirX, dirY);
 
-	const color = colors.index[colorIndex];
+	const color = colors.index[colorIndex] ?? '#aaa';
 	ctx.fillStyle = color;
 	ctx.strokeStyle = color;
 
