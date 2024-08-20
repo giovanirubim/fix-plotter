@@ -232,7 +232,7 @@ const readFixAt = ([ x, y ], apLat) => {
 	ctx.arc(x, y, 2, 0, Math.PI*2);
 	ctx.fill();
 	
-	const dLat = (y - cy)/degToPx;
+	const dLat = (cy - y)/degToPx;
 	const dLon = (x - cx)/degToPx/cos(apLat);
 
 	ctx.beginPath();
@@ -246,11 +246,11 @@ const readFixAt = ([ x, y ], apLat) => {
 
 	ctx.textAlign = 'left';
 	ctx.textBaseline = 'middle';
-	ctx.fillText(ANGLE.stringifyAngle(dLat), x + gap, (y + cy)*0.5);
+	ctx.fillText(ANGLE.stringifyAngle(Math.abs(dLat)), x + gap, (y + cy)*0.5);
 
 	ctx.textAlign = 'center';
 	ctx.textBaseline = 'bottom';
-	ctx.fillText(ANGLE.stringifyAngle(dLon), (x + cx)*0.5, y - gap);
+	ctx.fillText(ANGLE.stringifyAngle(Math.abs(dLon)), (x + cx)*0.5, y - gap);
 
 	return [ dLat, dLon ];
 };

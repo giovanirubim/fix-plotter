@@ -4,7 +4,7 @@ import * as OUTPUT from './output.js';
 
 const inputDOM = document.querySelector('#input');
 const defInput = [
-	`AP: N 0, E 85`,
+	`AP: 1° S, 85° E`,
 	``,
 	`- Name: Alphecca`,
 	`  Ho: 18°38.2'`,

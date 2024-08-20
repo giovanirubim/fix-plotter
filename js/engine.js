@@ -83,7 +83,7 @@ const commands = [{
 			throw new InputError('Duplicated Dec');
 		}
 		const arg = line.replace(this.pattern, '').trim();
-		const dec = ANGLE.parseAngle(arg);
+		const dec = ANGLE.parseLatitude(arg);
 		if (dec == null) {
 			throw new InputError(`Invalid value for Dec: "${arg}"`);
 		}
@@ -131,6 +131,17 @@ const validateData = () => {
 	}
 };
 
+const subtractMagnitude = (a, b) => {
+	const magA = Math.abs(a);
+	const magB = Math.abs(b);
+	const strA = ANGLE.stringifyAngle(magA);
+	const strB = ANGLE.stringifyAngle(magB);
+	if ((b < 0) !== (a < 0)) {
+		return `${strA} + ${strB}`;
+	}
+	return magA > magB ? `${strA} - ${strB}` : `${strB} - ${strA}`;
+};
+
 const runFix = () => {
 	const [ apLat, apLon ] = fixData.ap;
 	fixData.sights.forEach((sight, i) => {;
@@ -138,17 +149,9 @@ const runFix = () => {
 		OUTPUT.addTitle(sight.name);
 
 		let lha = sight.gha + apLon;
-		let lhaCalc;
-		if (apLon >= 0) {
-			const ghaStr = ANGLE.stringifyAngle(sight.gha);
-			const lonStr = ANGLE.stringifyAngle(apLon);
-			lhaCalc = `LHA = ${ghaStr} + ${lonStr}`;
-		} else {
-			const ghaStr = ANGLE.stringifyAngle(sight.gha);
-			const lonStr = ANGLE.stringifyAngle(Math.abs(apLon));
-			lhaCalc = `LHA = ${ghaStr} - ${lonStr}`;
-		}
-		lhaCalc += ` = ` + ANGLE.stringifyAngle(lha);
+		let lhaCalc = 'LHA = '
+			+ subtractMagnitude(sight.gha, - apLon)
+			+ ' = ' + ANGLE.stringifyAngle(lha);
 		
 		OUTPUT.addLine(lhaCalc);
 		
@@ -157,9 +160,7 @@ const runFix = () => {
 			lha -= 360;
 			const res = ANGLE.stringifyAngle(lha);
 			OUTPUT.addLine(`LHA = ${old} - 360° = ${res}`);
-		}
-
-		if (lha < 0) {
+		} else if (lha < 0) {
 			const old = ANGLE.stringifyAngle(Math.abs(lha));
 			lha += 360;
 			const res = ANGLE.stringifyAngle(lha);
@@ -185,7 +186,16 @@ const runFix = () => {
 		fixData.lops.push(lop);
 	});
 
-	CHART.intersect(fixData.lops, apLat);
+	const [ dLat, dLon ] = CHART.intersect(fixData.lops, apLat);
+	const lat = apLat + dLat;
+	const lon = apLon + dLon;
+	const strLat = ANGLE.stringifyLatitude(lat);
+	const strLon = ANGLE.stringifyLongitude(lon);
+	const fix = `${strLat}, ${strLon}`;
+	OUTPUT.addTitle('Fix');
+	OUTPUT.addLine(`Latitude = ${subtractMagnitude(apLat, - dLat)} = ${strLat}`);
+	OUTPUT.addLine(`Longitude = ${subtractMagnitude(apLon, - dLon)} = ${strLon}`);
+	OUTPUT.addLine(`Fix = ${fix}`);
 };
 
 export const runCode = (code) => {
