@@ -207,6 +207,5 @@ export const runCode = (code) => {
 	}
 
 	validateData();
-
 	runFix();
 };

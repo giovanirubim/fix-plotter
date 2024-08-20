@@ -1,5 +1,6 @@
 import { cos, sin, toRad } from './trig.js';
 import * as ANGLE from './str-angle.js';
+import * as VEC from './vec-math.js';
 
 const canvas = document.querySelector('canvas');
 const ctx = canvas.getContext('2d');
@@ -250,11 +251,41 @@ const readFixAt = ([ x, y ], apLat) => {
 	ctx.textAlign = 'center';
 	ctx.textBaseline = 'bottom';
 	ctx.fillText(ANGLE.stringifyAngle(dLon), (x + cx)*0.5, y - gap);
+
+	return [ dLat, dLon ];
+};
+
+const solveCockedHat = (a, b, c) => {
+	const p1 = getLOPPairIntersection(a, b);
+	const p2 = getLOPPairIntersection(a, c);
+	const p3 = getLOPPairIntersection(b, c);
+
+	const d1 = VEC.normal(
+		VEC.sum(
+			VEC.normal(VEC.sub(p2, p1)),
+			VEC.normal(VEC.sub(p3, p1)),
+		),
+	);
+
+	const d2 = VEC.normal(
+		VEC.sum(
+			VEC.normal(VEC.sub(p1, p2)),
+			VEC.normal(VEC.sub(p3, p2)),
+		),
+	);
+
+	return getLOPPairIntersection(
+		[ ...p1, ...d1 ],
+		[ ...p2, ...d2 ],
+	);
 };
 
 export const intersect = (lops, apLat) => {
 	if (lops.length === 2) {
-		const [ a, b ] = lops;
-		readFixAt(getLOPPairIntersection(a, b), apLat);
+		return readFixAt(getLOPPairIntersection(...lops), apLat);
 	}
+	if (lops.length === 3) {
+		return readFixAt(solveCockedHat(...lops), apLat);
+	}
+	return null;
 };

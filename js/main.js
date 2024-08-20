@@ -15,11 +15,11 @@ const defInput = [
 	`  Ho: 35°21'`,
 	`  Dec: 27°58'`,
 	`  GHA: 323° 13.2'`,
-	// ``,
-	// `- Name: Rigil Kent.`,
-	// `  Ho: 16°45.9'`,
-	// `  Dec: -60°56.2'`,
-	// `  GHA: 220° 9.2`,
+	``,
+	`- Name: Rigil Kent.`,
+	`  Ho: 16°45.9'`,
+	`  Dec: -60°56.2'`,
+	`  GHA: 220° 9.2`,
 ].join('\n');
 
 const handleInput = () => {
