@@ -24,8 +24,7 @@ const drawAzimuthCircle = () => {
 	ctx.arc(cx, cy, rad, 0, toRad(360));
 	ctx.stroke();
 
-	ctx.font = rad * 0.06 + 'px arial';
-	ctx.textBaseline = 'top';
+	ctx.font = rad * 0.05 + 'px arial';
 	ctx.textAlign = 'center';
 	const minLine = 0.02 * rad;
 	const midLine = 0.03 * rad;
@@ -44,7 +43,15 @@ const drawAzimuthCircle = () => {
 		if (i % 10 !== 0) {
 			continue;
 		}
-		ctx.fillText(i, 0, c);
+		if (cos(i) >= 0) {
+			ctx.textBaseline = 'top';
+			ctx.fillText(i, 0, c);
+		} else {
+			ctx.textBaseline = 'bottom';
+			ctx.setTransform(1, 0, 0, 1, cx, cy);
+			ctx.rotate(toRad(i + 180));
+			ctx.fillText(i, 0, - c);
+		}
 	}
 	ctx.resetTransform();
 };
@@ -86,6 +93,9 @@ export const clear = () => {
 
 	ctx.fillStyle = colors.chartLines;
 	ctx.strokeStyle = colors.chartLines;
+	ctx.lineWidth = 1;
+	ctx.lineCap = 'round';
+	ctx.lineJoin = 'round';
 
 	drawAzimuthCircle();
 	drawLatitudes();
@@ -194,12 +204,22 @@ export const drawAzimuth = (zn, label, flipArrow, colorIndex) => {
 	ctx.stroke();
 	ctx.setLineDash([]);
 
-	ctx.textAlign = 'right';
+	ctx.font = degToPx * 0.065 + 'px arial';
 	ctx.textBaseline = 'middle';
 	ctx.setTransform(1, 0, 0, 1, cx, cy);
-	ctx.rotate(toRad(zn - 90));
-	ctx.fillText(label, - excess - gap, 0);
-	ctx.resetTransform();
+
+	const rot = (zn - 90);
+	if (cos(rot) >= 0) {
+		ctx.textAlign = 'right';
+		ctx.rotate(toRad(rot));
+		ctx.fillText(label, - excess - gap, 0);
+		ctx.resetTransform();
+	} else {
+		ctx.textAlign = 'left';
+		ctx.rotate(toRad(rot + 180));
+		ctx.fillText(label, excess + gap, 0);
+		ctx.resetTransform();
+	}
 
 	if (flipArrow) {
 		drawArrowTip(zn + 180, calcDist(cx, cy, ax, ay));
