@@ -142,8 +142,8 @@ const dirMarginIntersection = (ax, ay, dirX, dirY) => {
 };
 
 const drawArrowTip = (zn, rad) => {
-	const angle = 35;
-	const len = degToPx * 0.05;
+	const angle = 30;
+	const len = degToPx * 0.035;
 
 	const x = 0;
 	const y = - rad;
@@ -185,7 +185,7 @@ export const drawLOP = (zn, dist) => {
 export const drawAzimuth = (zn, label, flipArrow, colorIndex) => {
 	const dirX = sin(zn);
 	const dirY = - cos(zn);
-	const excess = degToPx * 0.1;
+	const excess = degToPx * 0.2;
 	const gap = degToPx * 0.05;
 
 	const [ cx, cy ] = origin;
