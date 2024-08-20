@@ -52,13 +52,24 @@ body {
 	bottom: 0px;
 	overflow: auto;
 }
-.main > div {
-	box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5);
+.main .main-item {
 	width: 800px;
-	margin: 0px auto 40px auto;
+	margin: auto;
+	padding: 10px 20px;
 }
-.main > div:nth-child(1) {
-	margin-top: 50px;
+.main .main-item:nth-child(1) {
+	margin-top: 20px;
+}
+.main .main-item:last-child {
+	margin-bottom: 20px;
+}
+.main .main-item > div {
+	box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.5);
+}
+.main .item-title {
+	color: #fff;
+	background-color: #444;
+	padding: 5px 7px;
 }
 #text {
 	color: #7fb;
@@ -73,4 +84,17 @@ body {
 }
 #text .title:nth-child(1) {
 	margin-top: 0px;
+}
+::-webkit-scrollbar {
+	width: 8px;
+	height: 8px;
+}
+::-webkit-scrollbar-track {
+	background: #333;
+}
+::-webkit-scrollbar-thumb {
+	background: #666;
+}
+::-webkit-scrollbar-thumb:hover {
+	background: #fff;
 }
