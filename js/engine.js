@@ -167,8 +167,8 @@ const runFix = () => {
 			OUTPUT.addLine(`LHA = 360° - ${old} = ${res}`);
 		}
 
-		const zn = calcZn(apLat, sight.dec, lha);
 		const hc = calcHc(apLat, sight.dec, lha);
+		const zn = calcZn(apLat, sight.dec, lha, hc);
 		const dh = sight.ho - hc;
 		const lopDir = dh >= 0 ? 'towards the GP' : 'away from the GP';
 
